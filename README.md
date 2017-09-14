@@ -1,2 +1,3 @@
 # angular-module3-solution
-AngularJS module3 coursera
+
+AngularJS module 3 Coursera
