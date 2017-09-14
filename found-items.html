@@ -1,4 +1,7 @@
-<li>{{item.name}}
-<button class="btn btn-danger" ng-click="menu.dontWantThis($index)">
-    Don't want this one!</button>
-</li>
+<div class="row">
+  <div class="col-md-4">{{item.name}}</div>
+  <div class="col-md-2">{{item.short_name}}</div>
+  <div class="col-md-4">{{item.description}}</div>
+  <div class="col-md-2"><button class="btn btn-danger" ng-click="menu.dontWantThis($index)">
+    Don't want this one!</button></div>
+</div>

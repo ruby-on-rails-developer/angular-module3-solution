@@ -9,7 +9,7 @@
 
   function foundItems() {
     var ddo = {
-      restrict: 'AE',
+      restrict: 'E',
       templateUrl: "found-items.html"
     };
     return ddo;
