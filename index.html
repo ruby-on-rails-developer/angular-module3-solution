@@ -13,11 +13,17 @@
    <div class="container" ng-controller="NarrowItDownController as menu">
     <h1>Narrow Down Your Chinese Menu Choice</h1>
     <form class="form-inline">
-      <div class="form-group" >
-        <input type="text" placeholder="search term" class="form-control" ng-model="menu.searchText">
-      </div>
-      <div class="form-group narrow-button">
-        <button class="btn btn-primary" ng-click="menu.getMatchedMenuItems()">Narrow It Down For Me!</button>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group" >
+            <input type="text" placeholder="search term" class="form-control" ng-model="menu.searchText">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group narrow-button">
+            <button class="btn btn-primary" ng-click="menu.getMatchedMenuItems()">Narrow It Down For Me!</button>
+          </div>
+        </div>
       </div>
     </form>
 
