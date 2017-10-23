@@ -10,8 +10,17 @@
   function foundItems() {
     var ddo = {
       restrict: 'E',
-      templateUrl: "found-items.html"
+      templateUrl: "found-items.html",
+      // scope: {
+      //   found: '<',
+      //   onRemove: '&'
+      // },
+
+  //     controller: ShoppingListDirectiveController,
+  //     controllerAs: 'list',
+  //     bindToController: true
     };
+
     return ddo;
   }
 
@@ -19,11 +28,16 @@
   function NarrowItDownController(MenuSearchService) {
     var items = this;
     items.found = "";
+    items.searchText = "";
+    items.nothingFoundYet = false;
 
     items.getMatchedMenuItems = function() {
-      var promise = MenuSearchService.getMatchedMenuItems();
+      var promise = MenuSearchService.getMatchedMenuItems(items.searchText);
       promise.then(function (response){
         items.found = response;
+        items.nothingFoundYet = ( response.length !== 0 ) ? false : true;
+
+        console.log("not found: ", items.nothingFoundYet);
       });
     };
 
@@ -33,21 +47,37 @@
   }
 
   MenuSearchService.$inject = ['$http', 'ApiBasePath'];
-  // MenuSearchService.$inject = ['$http', '$filter', 'ApiBasePath'];
-  // function MenuSearchService($http, $filter, ApiBasePath) {
-
   function MenuSearchService($http, ApiBasePath) {
     var service = this;
 
-    service.getMatchedMenuItems = function () {
+    service.getMatchedMenuItems = function (searchTerm) {
+
       return $http({
         method: "GET",
         url: (ApiBasePath + "/menu_items.json")
       })
       .then(function (response) {
+        var items = [];
+        var description;
+
+        console.log("** search term: ", searchTerm);
+        console.log("** return values **");
         console.log(response.data);
+
+        if (searchTerm.length === 0) {
+          console.log("textbox empty");
+          return items;
+        }
+
         var menu_items = response.data.menu_items;
-        return menu_items;
+
+        for (var i in menu_items) {
+          description = menu_items[i].description;
+          if ( description.indexOf(searchTerm) !== -1 ) {
+            items.push(menu_items[i]);
+          }
+        }
+        return items;
       })
       .catch(function (error) {
         console.log(error);
