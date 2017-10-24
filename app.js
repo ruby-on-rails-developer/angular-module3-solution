@@ -11,14 +11,12 @@
     var ddo = {
       restrict: 'E',
       templateUrl: "found-items.html",
-      // scope: {
-      //   found: '<',
-      //   onRemove: '&'
-      // },
-
-  //     controller: ShoppingListDirectiveController,
-  //     controllerAs: 'list',
-  //     bindToController: true
+      scope: {
+        // name: '@',
+        // short_name: "@",
+        // description: "@"
+        menu: '<myList'
+      }
     };
 
     return ddo;
@@ -37,7 +35,7 @@
         items.found = response;
         items.nothingFoundYet = ( response.length !== 0 ) ? false : true;
 
-        console.log("not found: ", items.nothingFoundYet);
+        console.log("Nothing found: ", items.nothingFoundYet);
       });
     };
 

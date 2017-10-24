@@ -27,9 +27,13 @@
       </div>
     </form>
 
+    <br />
     <!-- found-items should be implemented as a component -->
     <!-- <found-items found-items="...." on-remove="...."></found-items> -->
-    <found-items  ng-repeat="item in menu.found"></found-items>
+    <!-- <found-items  ng-repeat="item in menu.found"
+                  name ="{{item.name}}" short_name ="{{item.short_name}}" description="{{item.description}}">
+    </found-items> -->
+    <found-items my-list="menu"></found-items>
   </div>
 
 </body>
