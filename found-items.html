@@ -1,21 +1,10 @@
-<!-- <div class="row well well-sm">
-  <div class="col-md-4">{{name}}</div>
-  <div class="col-md-2">{{short_name}}</div>
-  <div class="col-md-4">{{description}}</div>
-  <div class="col-md-2"><button class="btn btn-danger" ng-click="menu.dontWantThis($index)">
-    Don't want this one!</button></div>
-  <div ng-if="menu.nothingFoundYet">Nothing found</div>
-</div>
-
- -->
-
-<div ng-repeat="item in menu.found">
+<div ng-repeat="item in Ctrl.foundItems">
   <div class="row well well-sm">
     <div class="col-md-4">{{item.name}}</div>
     <div class="col-md-2">{{item.short_name}}</div>
     <div class="col-md-4">{{item.description}}</div>
-    <div class="col-md-2"><button class="btn btn-danger" ng-click="menu.dontWantThis($index)">
+    <div class="col-md-2"><button class="btn btn-danger" ng-click="Ctrl.onRemove({index: $index});">
       Don't want this one!</button></div>
   </div>
 </div>
-<div ng-if="menu.nothingFoundYet == true">Nothing found</div>
+<div ng-if="Ctrl.noItem(Ctrl.foundItems)">Nothing found</div>

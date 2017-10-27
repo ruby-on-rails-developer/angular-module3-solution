@@ -12,14 +12,25 @@
       restrict: 'E',
       templateUrl: "found-items.html",
       scope: {
-        // name: '@',
-        // short_name: "@",
-        // description: "@"
-        menu: '<myList'
-      }
+        foundItems: '<',
+        onRemove: '&'
+      },
+      controller: FoundItemsDirectiveController,
+      bindToController: true,
+      controllerAs: 'Ctrl'
     };
 
     return ddo;
+  }
+
+  function FoundItemsDirectiveController() {
+    var items = this;
+
+    items.noItem = function(items) {
+      console.log("items: ", items);
+
+      return ( items == undefined ) || ( items.length == 0);
+    };
   }
 
   NarrowItDownController.$inject = ['MenuSearchService'];
@@ -27,19 +38,15 @@
     var items = this;
     items.found = "";
     items.searchText = "";
-    items.nothingFoundYet = false;
 
     items.getMatchedMenuItems = function() {
       var promise = MenuSearchService.getMatchedMenuItems(items.searchText);
       promise.then(function (response){
         items.found = response;
-        items.nothingFoundYet = ( response.length !== 0 ) ? false : true;
-
-        console.log("Nothing found: ", items.nothingFoundYet);
       });
     };
 
-    items.dontWantThis = function(index) {
+    items.removeItem = function(index) {
       items.found.splice(index,1);
     };
   }
@@ -55,16 +62,15 @@
         url: (ApiBasePath + "/menu_items.json")
       })
       .then(function (response) {
-        var items = [];
+        var foundItems = [];
         var description;
 
         console.log("** search term: ", searchTerm);
-        console.log("** return values **");
-        console.log(response.data);
+        console.log("** return values **", response.data);
 
         if (searchTerm.length === 0) {
           console.log("textbox empty");
-          return items;
+          return foundItems;
         }
 
         var menu_items = response.data.menu_items;
@@ -72,16 +78,15 @@
         for (var i in menu_items) {
           description = menu_items[i].description;
           if ( description.indexOf(searchTerm) !== -1 ) {
-            items.push(menu_items[i]);
+            foundItems.push(menu_items[i]);
           }
         }
-        return items;
+        return foundItems;
       })
       .catch(function (error) {
-        console.log(error);
+        console.log("getMatchedMenuItems MenuSearchService - error", error);
         return "";
       });
     };
   }
-
 })();
